@@ -1,8 +1,19 @@
+machine:
+  environment:
+    INSTALL_PREFIX_DIR: ~/opt
+    INSTALL_PREFIX_BIN_DIR: ${INSTALL_PREFIX_DIR}/bin
+    PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
+
 checkout:
   post:
     - git submodule sync --recursive
     - git submodule update --recursive --init
 
+dependencies:
+  override:
+    - vendor-install-tools/install.ph meson --installPrefixDir=${INSTALL_PREFIX_BIN_DIR}
+
 test:
   post:
+    - meson --version
     - echo 'Does nothing yet'
