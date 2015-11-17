@@ -22,6 +22,9 @@ checkout:
     - git submodule update --recursive --init
 
 dependencies:
+  cache_dependencies:
+    - ${INSTALL_PREFIX_DIR}
+
   pre:
     # Install the tools we need
     - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
