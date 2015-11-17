@@ -1,6 +1,6 @@
 machine:
   environment:
-    INSTALL_PREFIX_DIR: ~/opt
+    INSTALL_PREFIX_DIR: ${HOME}/opt
     INSTALL_PREFIX_BIN_DIR: ${INSTALL_PREFIX_DIR}/bin
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
 
@@ -11,7 +11,7 @@ checkout:
 
 dependencies:
   override:
-    - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_BIN_DIR}
+    - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
 
 test:
   post:
