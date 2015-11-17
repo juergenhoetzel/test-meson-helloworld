@@ -5,7 +5,17 @@ machine:
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
 
   pre:
-    - sudo apt-get install realpath # needed by test.sh
+    # realpath needed by test.sh
+    - sudo apt-get install realpath
+
+      # We need gcc/g++ 5 because options -Wpednatic and -std
+      # are not in older compilers and they generate unknown
+      # command line option errors. The update-alternatives
+      # makes the compilers the default.
+    - sudo apt-get install gcc-5
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
+    - sudo apt-get install g++-5
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
 
 checkout:
   post:
