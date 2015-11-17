@@ -44,5 +44,13 @@ test:
     - cd build && meson ..
 
   override:
-    # run the application
+    # Do a default build
+    - cd build && ninja
+    # Run the application
     - cd build && ninja run
+    # Clean
+    - cd build && ninja clean
+    # Build and test
+    - cd build && ninja test
+    # Retest without the need for a build
+    - cd build && ninja test
