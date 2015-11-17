@@ -11,9 +11,9 @@ checkout:
 
 dependencies:
   override:
-    - vendor-install-tools/install.ph meson --installPrefixDir=${INSTALL_PREFIX_BIN_DIR}
+    - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_BIN_DIR}
 
 test:
   post:
-    - meson --version
+    - meson -v
     - echo 'Does nothing yet'
