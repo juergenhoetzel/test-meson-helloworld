@@ -5,7 +5,7 @@ machine:
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
 
   pre:
-    sudo apt-get install realpath # needed by test.sh
+    - sudo apt-get install realpath # needed by test.sh
 
 checkout:
   post:
