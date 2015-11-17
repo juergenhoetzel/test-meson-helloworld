@@ -13,10 +13,27 @@ checkout:
     - git submodule update --recursive --init
 
 dependencies:
-  override:
+  pre:
+    # Install the tools we need
     - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
 
-test:
-  post:
+  override:
+    # verfiy the tools are installed
     - meson -v
     - vendor-install-tools/test.sh meson
+    - ninja --version
+    - vendor-install-tools/test.sh ninja
+
+  post:
+    # Create the build directory
+    - mkdir -p build
+
+test:
+  pre:
+    # Instruct meson to create the build.ninja file
+    - cd build && meson ..
+
+  override:
+    # run the application
+    - cd build && ninja run
