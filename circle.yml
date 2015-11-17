@@ -4,6 +4,9 @@ machine:
     INSTALL_PREFIX_BIN_DIR: ${INSTALL_PREFIX_DIR}/bin
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
 
+  pre:
+    sudo apt-get install realpath # needed by test.sh
+
 checkout:
   post:
     - git submodule sync --recursive
