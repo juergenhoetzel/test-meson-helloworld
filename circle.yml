@@ -16,4 +16,4 @@ dependencies:
 test:
   post:
     - meson -v
-    - echo 'Does nothing yet'
+    - vendor-install-tools/test.sh meson
