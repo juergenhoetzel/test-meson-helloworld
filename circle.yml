@@ -7,15 +7,15 @@ machine:
 
   pre:
     # realpath needed by test.sh
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo apt-get install realpath
+    - sudo apt-get install realpath
 
       # We need gcc/g++ 5 because options -Wpednatic and -std
       # are not in older compilers and they generate unknown
       # command line option errors. The update-alternatives
       # makes the compilers the default.
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+    - sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
 
 checkout:
   post:
