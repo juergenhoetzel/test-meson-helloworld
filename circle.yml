@@ -24,7 +24,8 @@ checkout:
 
 dependencies:
   cache_directories:
-    - ${INSTALL_PREFIX_DIR_HOME_REL}
+    #- ${INSTALL_PREFIX_DIR_HOME_REL} # This doesn't work.
+    - ~/opt/bin
 
   pre:
     # Install the tools we need
