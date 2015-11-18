@@ -41,8 +41,11 @@ test:
     - cd build && meson ..
 
   override:
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja clean
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run:
+      parallel: true
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run:
+      parallel: true
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test:
+      parallel: true
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test:
+      parallel: true
