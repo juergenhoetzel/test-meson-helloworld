@@ -45,5 +45,5 @@ test:
         parallel: true
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test:
         parallel: true
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test:
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" ; cd build && ninja test:
         parallel: true
