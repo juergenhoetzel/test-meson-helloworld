@@ -35,10 +35,8 @@ dependencies:
 test:
   pre:
     # Create the build directory
-    - mkdir -p build
-
-    # Instruct meson to create the build.ninja file
-    - cd build && meson ..
+    - mkdir -p build && cd build && meson ..:
+        parallel: true
 
   override:
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run:
