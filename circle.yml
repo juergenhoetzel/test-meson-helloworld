@@ -29,7 +29,7 @@ dependencies:
 
   pre:
     # Install the tools we need
-    - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
 
 test:
@@ -41,8 +41,8 @@ test:
     - cd build && meson ..
 
   override:
-    - cd build && ninja
-    - cd build && ninja run
-    - cd build && ninja clean
-    - cd build && ninja test
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja clean
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test
