@@ -15,12 +15,12 @@ machine:
       # makes the compilers the default.
     - sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
 
 checkout:
   post:
-    - git submodule sync --recursive
-    - git submodule update --recursive --init
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && git submodule sync --recursive
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && git submodule update --recursive --init
 
 dependencies:
   cache_directories:
