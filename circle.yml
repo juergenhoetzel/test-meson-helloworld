@@ -7,20 +7,20 @@ machine:
 
   pre:
     # realpath needed by test.sh
-    - sudo apt-get install realpath
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo apt-get install realpath
 
       # We need gcc/g++ 5 because options -Wpednatic and -std
       # are not in older compilers and they generate unknown
       # command line option errors. The update-alternatives
       # makes the compilers the default.
-    - sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
 
 checkout:
   post:
-    - git submodule sync --recursive
-    - git submodule update --recursive --init
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; git submodule sync --recursive
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; git submodule update --recursive --init
 
 dependencies:
   cache_directories:
@@ -29,35 +29,35 @@ dependencies:
 
   pre:
     # Install the tools we need
-    - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
-    - vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
 
   override:
     # verfiy the tools are installed
-    - which meson
-    - meson -v
-    - vendor-install-tools/test.sh meson
-    - which ninja
-    - ninja --version
-    - vendor-install-tools/test.sh ninja
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; which meson
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; meson -v
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/test.sh meson
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; which ninja
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; ninja --version
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/test.sh ninja
 
   post:
     # Create the build directory
-    - mkdir -p build
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; mkdir -p build
 
 test:
   pre:
     # Instruct meson to create the build.ninja file
-    - cd build && meson ..
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && meson ..
 
   override:
     # Do a default build
-    - cd build && ninja
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja
     # Run the application
-    - cd build && ninja run
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja run
     # Clean
-    - cd build && ninja clean
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja clean
     # Build and test
-    - cd build && ninja test
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja test
     # Retest without the need for a build
-    - cd build && ninja test
+    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja test
