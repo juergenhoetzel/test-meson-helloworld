@@ -30,23 +30,13 @@ dependencies:
   pre:
     # Install the tools we need
     - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
-    - vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
-
-  override:
-    # verfiy the tools are installed
-    - which meson
-    - meson -v
-    - vendor-install-tools/test.sh meson
-    - which ninja
-    - ninja --version
-    - vendor-install-tools/test.sh ninja
-
-  post:
-    # Create the build directory
-    - mkdir -p build
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
 
 test:
   pre:
+    # Create the build directory
+    - mkdir -p build
+
     # Instruct meson to create the build.ninja file
     - cd build && meson ..
 
