@@ -22,7 +22,7 @@ checkout:
     - git submodule update --recursive --init
 
 dependencies:
-  cache_dependencies:
+  cache_directories:
     - ${INSTALL_PREFIX_DIR}
 
   pre:
