@@ -19,8 +19,8 @@ machine:
 
 checkout:
   post:
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; git submodule sync --recursive
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; git submodule update --recursive --init
+    - git submodule sync --recursive
+    - git submodule update --recursive --init
 
 dependencies:
   cache_directories:
@@ -29,35 +29,30 @@ dependencies:
 
   pre:
     # Install the tools we need
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
 
   override:
     # verfiy the tools are installed
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; which meson
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; meson -v
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/test.sh meson
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; which ninja
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; ninja --version
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; vendor-install-tools/test.sh ninja
+    - which meson
+    - meson -v
+    - vendor-install-tools/test.sh meson
+    - which ninja
+    - ninja --version
+    - vendor-install-tools/test.sh ninja
 
   post:
     # Create the build directory
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; mkdir -p build
+    - mkdir -p build
 
 test:
   pre:
     # Instruct meson to create the build.ninja file
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && meson ..
+    - cd build && meson ..
 
   override:
-    # Do a default build
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja
-    # Run the application
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja run
-    # Clean
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja clean
-    # Build and test
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja test
-    # Retest without the need for a build
-    - echo "${CIRCLE_NODE_INDEX}/${CIRCLE_NODE_TOTAL}: "; cd build && ninja test
+    - cd build && ninja
+    - cd build && ninja run
+    - cd build && ninja clean
+    - cd build && ninja test
+    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test
