@@ -1,5 +1,6 @@
 machine:
   environment:
+    INSTALL_PREFIX_DIR_HOME_REL: ~/opt
     INSTALL_PREFIX_DIR: ${HOME}/opt
     INSTALL_PREFIX_BIN_DIR: ${INSTALL_PREFIX_DIR}/bin
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
@@ -23,7 +24,7 @@ checkout:
 
 dependencies:
   cache_directories:
-    - ${INSTALL_PREFIX_DIR}
+    - ${INSTALL_PREFIX_DIR_HOME_REL}
 
   pre:
     # Install the tools we need
