@@ -25,7 +25,7 @@ checkout:
 dependencies:
   cache_directories:
     #- ${INSTALL_PREFIX_DIR_HOME_REL} # This doesn't work.
-    - ~/opt/bin
+    - ~/opt
 
   pre:
     # Install the tools we need
@@ -34,8 +34,10 @@ dependencies:
 
   override:
     # verfiy the tools are installed
+    - which meson
     - meson -v
     - vendor-install-tools/test.sh meson
+    - which ninja
     - ninja --version
     - vendor-install-tools/test.sh ninja
 
