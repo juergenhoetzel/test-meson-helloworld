@@ -42,10 +42,10 @@ test:
 
   override:
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run:
-      parallel: true
+        parallel: true
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run:
-      parallel: true
+        parallel: true
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test:
-      parallel: true
+        parallel: true
     - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test:
-      parallel: true
+        parallel: true
