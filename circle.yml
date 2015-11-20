@@ -4,7 +4,7 @@ machine:
     INSTALL_PREFIX_DIR: ${HOME}/opt
     INSTALL_PREFIX_BIN_DIR: ${INSTALL_PREFIX_DIR}/bin
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
-    GCC_VERSION: 4.9
+    GCC_VER: "4.9"
 
   post:
     # Test is environment variables are available
@@ -13,15 +13,15 @@ machine:
     # realpath needed by test.sh
     - sudo apt-get install realpath
 
-    # Use gcc/g++ 4.9 as we need -Wpendatic and -stc support which isn't
+    # Maybe use gcc/g++ 4.9 as we need -Wpendatic and -stc support which isn't
     # available in gcc/g++ 4.6 the current default.
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
+    - [[ "${GCC_VER}" == "4.9" ]] && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
+    - [[ "${GCC_VER}" == "4.9" ]] && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
 
-    # Use gcc/g++ 5
-    #- sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
-    #- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
-    #- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+    # Maybe use gcc/g++ 5
+    - [[ "${GCC_VER}" == "5" ]] && sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
+    - [[ "${GCC_VER}" == "5" ]] && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
+    - [[ "${GCC_VER}" == "5" ]] && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
 
 checkout:
   post:
