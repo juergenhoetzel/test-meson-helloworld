@@ -18,13 +18,13 @@ machine:
 
     # Maybe use gcc/g++ 4.9 as we need -Wpendatic and -stc support which isn't
     # available in gcc/g++ 4.6 the current default.
-    - [[ "${GCC_VER}" == "4.9" ]] && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-    - [[ "${GCC_VER}" == "4.9" ]] && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
+    - if [[ "${GCC_VER}" == "4.9" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100 ; fi
+    - if [[ "${GCC_VER}" == "4.9" ]]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100 ; fi
 
     # Maybe use gcc/g++ 5
-    - [[ "${GCC_VER}" == "5" ]] && sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
-    - [[ "${GCC_VER}" == "5" ]] && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
-    - [[ "${GCC_VER}" == "5" ]] && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+    - if [[ "${GCC_VER}" == "5" ]]; then sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5 ; fi
+    - if [[ "${GCC_VER}" == "5" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100 ; fi
+    - if [[ "${GCC_VER}" == "5" ]]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100 ; fi
 
 checkout:
   post:
