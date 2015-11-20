@@ -7,11 +7,15 @@ machine:
     GCC_VER: "4.9"
 
   post:
-    # test multiline yaml support
-    - |
-      if [[ "$GCC_VER" == "4.9" ]]; then
-        echo GCC_VER is 4.9
+    - | # Test multiline yaml support
+      if [[ "$GCC_VER" == "5" ]]; then
+        echo GCC_VER is 5
+      else
+        echo GCC_VER is not 5
       fi
+
+    - | # Test Conditional expression
+      [[ "${GCC_VER}" == "4.9" ]] && echo GCC_VER is 4.9
 
     # Make bash the default shell
     - sudo update-alternatives --install /bin/sh sh /bin/bash 100
