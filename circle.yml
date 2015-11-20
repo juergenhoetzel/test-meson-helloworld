@@ -25,7 +25,7 @@ checkout:
   post:
     # Update the submodules
     - git submodule sync --recursive
-    - submodule update --recursive --init
+    - git submodule update --recursive --init
 
 dependencies:
   cache_directories:
