@@ -9,18 +9,23 @@ machine:
     # realpath needed by test.sh
     - sudo apt-get install realpath
 
-      # We need gcc/g++ 5 because options -Wpednatic and -std
-      # are not in older compilers and they generate unknown
-      # command line option errors. The update-alternatives
-      # makes the compilers the default.
-    - sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+    # We need gcc/g++ 5 because options -Wpednatic and -std
+    # are not in older compilers and they generate unknown
+    # command line option errors. The update-alternatives
+    # makes the compilers the default.
+    #- sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
+    #- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
+    #- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+
+    # Try 4.9 to see if its upto date enough to compile our code.
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
 
 checkout:
   post:
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && git submodule sync --recursive
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && git submodule update --recursive --init
+    # Update the submodules
+    - git submodule sync --recursive
+    - submodule update --recursive --init
 
 dependencies:
   cache_directories:
@@ -29,8 +34,8 @@ dependencies:
 
   pre:
     # Install the tools we need
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - vendor-install-tools/install.py meson --installPrefixDir=${INSTALL_PREFIX_DIR}
+    - vendor-install-tools/install.py ninja --installPrefixDir=${INSTALL_PREFIX_DIR}
 
 test:
   pre:
@@ -39,11 +44,11 @@ test:
         parallel: true
 
   override:
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run:
+    - cd build && ninja run:
         parallel: true
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja run:
+    - cd build && ninja run:
         parallel: true
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" && cd build && ninja test:
+    - cd build && ninja test:
         parallel: true
-    - echo "I=${CIRCLE_NODE_INDEX} T=${CIRCLE_NODE_TOTAL}" ; cd build && ninja test:
+    - cd build && ninja test:
         parallel: true
