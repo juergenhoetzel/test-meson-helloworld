@@ -14,6 +14,10 @@ machine:
         echo GCC_VER is not 5
       fi
 
+      # Test Conditional expression
+      [[ "${GCC_VER}" == "4.9" ]] && echo GCC_VER is 4.9
+      [[ "${GCC_VER}" == "5" ]] && echo GCC_VER is 5
+
     - | # Test Conditional expression
       [[ "${GCC_VER}" == "4.9" ]] && echo GCC_VER is 4.9
 
