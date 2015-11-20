@@ -6,7 +6,7 @@ machine:
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
     GCC_VERSION: 4.9
 
-  pre:
+  post:
     # Test is environment variables are available
     - echo GCC_VERSION=${GCC_VERSION}
 
