@@ -7,6 +7,9 @@ machine:
     GCC_VER: "4.9"
 
   post:
+    # Make bash the default shell
+    - sudo update-alternatives --install /bin/sh sh /bin/bash 100
+
     # Test is environment variables are available
     - echo GCC_VERSION=${GCC_VERSION}
 
