@@ -4,22 +4,24 @@ machine:
     INSTALL_PREFIX_DIR: ${HOME}/opt
     INSTALL_PREFIX_BIN_DIR: ${INSTALL_PREFIX_DIR}/bin
     PATH: ${INSTALL_PREFIX_BIN_DIR}:${PATH}
+    GCC_VERSION: 4.9
 
   pre:
+    # Test is environment variables are available
+    - echo GCC_VERSION=${GCC_VERSION}
+
     # realpath needed by test.sh
     - sudo apt-get install realpath
 
-    # We need gcc/g++ 5 because options -Wpednatic and -std
-    # are not in older compilers and they generate unknown
-    # command line option errors. The update-alternatives
-    # makes the compilers the default.
+    # Use gcc/g++ 4.9 as we need -Wpendatic and -stc support which isn't
+    # available in gcc/g++ 4.6 the current default.
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
+
+    # Use gcc/g++ 5
     #- sudo apt-get update; sudo apt-get install gcc-5; sudo apt-get install g++-5
     #- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
     #- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
-
-    # Try 4.9 to see if its upto date enough to compile our code.
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
 
 checkout:
   post:
